@@ -1,12 +1,147 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="viewport" content="width=device-width"><title>LoveLust.ai</title>
-<style>body{background:#000;color:#fff;text-align:center;padding:20px;font-family:sans-serif}.card{background:#1a1a1a;padding:15px;border-radius:15px;margin:15px}.btn{background:#ff2d55;color:#fff;padding:12px 25px;border-radius:25px;border:none;font-size:18px}</style>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoveLust.ai - Unlimited AI Characters</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0a0a0a;color:#fff;font-family:Inter,system-ui,sans-serif}
+.header{position:sticky;top:0;z-index:50;background:#0a0a0aee;backdrop-filter:blur(10px);border-bottom:1px solid #222;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800;display:flex;gap:8px;align-items:center}
+.logo span{color:#ff2a6d}
+.search{flex:1;max-width:500px;margin:0 16px;background:#1a1a1a;border:1px solid #333;border-radius:999px;padding:10px 16px;color:#fff;width:100%}
+.tags{display:flex;gap:8px;overflow:auto;padding:12px 16px;scrollbar-width:none}
+.tag{white-space:nowrap;background:#1a1a1a;border:1px solid #333;padding:6px 14px;border-radius:999px;font-size:13px;cursor:pointer}
+.tag.active{background:#ff2a6d;border-color:#ff2a6d}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#161616;border:1px solid #222;border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}
+.card:hover{border-color:#ff2a6d}
+.card-img{height:180px;background:linear-gradient(135deg,#2a0a1a,#1a1a2a);display:flex;align-items:center;justify-content:center;font-size:50px}
+.card-body{padding:10px}
+.card-name{font-weight:700;font-size:14px}
+.card-desc{font-size:12px;color:#888;margin:4px 0;height:32px;overflow:hidden}
+.card-meta{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:6px}
+.chat-btn{width:100%;margin-top:8px;background:#ff2a6d;color:#fff;border:0;padding:8px;border-radius:999px;font-weight:600}
+.create-btn{position:fixed;bottom:20px;right:20px;background:#ff2a6d;width:56px;height:56px;border-radius:50%;border:0;font-size:28px;color:#fff;box-shadow:0 8px 30px #ff2a6d55}
+/* Chat Modal */
+#chatModal{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:100}
+.chat-header{padding:12px;border-bottom:1px solid #222;display:flex;align-items:center;gap:10px}
+.chat-messages{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:80%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.4}
+.msg.bot{background:#1e1e1e;align-self:flex-start;border-bottom-left-radius:4px}
+.msg.user{background:#ff2a6d;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-input{display:flex;gap:8px;padding:12px;border-top:1px solid #222}
+.chat-input input{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:999px;padding:12px 16px;color:#fff}
+.chat-input button{background:#ff2a6d;border:0;border-radius:999px;padding:0 18px;color:#fff;font-weight:700}
+</style>
 </head>
 <body>
-<h1>💋 LoveLust.ai</h1>
-<p>Unlimited Chat + Pics</p>
-<div class="card"><h3>🔥 Priya - 22</h3><p>Hi jaan, chat karse?</p><button class="btn">Chat Now</button></div>
-<div class="card"><h3>😍 Ananya - 21</h3><p>Tane yaad kare che</p><button class="btn">Chat Now</button></div>
+<div class="header">
+<div class="logo">💋 Love<span>Lust.ai</span></div>
+<input id="search" class="search" placeholder="Search 10,000+ characters... Priya, Bhabhi, GF...">
+<button style="background:#1a1a1a;border:1px solid #333;padding:8px 14px;border-radius:999px;color:#fff">Login</button>
+</div>
+<div class="tags" id="tags">
+<div class="tag active" data-tag="all">All</div>
+<div class="tag" data-tag="indian">🇮🇳 Indian</div>
+<div class="tag" data-tag="gf">GF</div>
+<div class="tag" data-tag="bhabhi">Bhabhi</div>
+<div class="tag" data-tag="college">College</div>
+<div class="tag" data-tag="nsfw">NSFW</div>
+<div class="tag" data-tag="romance">Romance</div>
+<div class="tag" data-tag="dominant">Dominant</div>
+<div class="tag" data-tag="cute">Cute</div>
+</div>
+<div class="grid" id="grid"></div>
+<button class="create-btn" onclick="createChar()">+</button>
+
+<div id="chatModal">
+<div class="chat-header">
+<span onclick="document.getElementById('chatModal').style.display='none'" style="font-size:20px;cursor:pointer">←</span>
+<div id="chatTitle" style="font-weight:700">Priya</div>
+</div>
+<div class="chat-messages" id="messages"></div>
+<div class="chat-input">
+<input id="chatInput" placeholder="Type anything... no filter ❤️">
+<button onclick="sendMsg()">Send</button>
+</div>
+</div>
+
+<script>
+const characters = [
+{name:"Priya",age:22,tag:"indian gf",emoji:"🔥",desc:"Hi jaan, chat karse? Tane yaad karu chu raat bhar",chats:"12.4k"},
+{name:"Ananya",age:21,tag:"college cute",emoji:"😍",desc:"Tane yaad kare che, college bunk kari ne malvu?",chats:"9.1k"},
+{name:"Bhabhi Neha",age:26,tag:"bhabhi indian",emoji:"🥵",desc:"Devar ji, akela chu ghar pe, baat karoge?",chats:"22.3k"},
+{name:"Sakshi",age:19,tag:"cute college",emoji:"💋",desc:"First time ayu chu, sikhavse mane?",chats:"7.2k"},
+{name:"Riya Dominant",age:24,tag:"dominant nsfw",emoji:"👠",desc:"I will control you tonight, obey me.",chats:"18k"},
+{name:"Pooja",age:23,tag:"indian romance",emoji:"🌹",desc:"Pyar se baat kar, dil se",chats:"11k"},
+{name:"Nisha",age:20,tag:"indian gf",emoji:"✨",desc:"Teri hi hu jaan, jo bolse e karis",chats:"15k"},
+{name:"Kavya",age:22,tag:"college nsfw",emoji:"😈",desc:"Naughty mood ma chu, rokshe kon?",chats:"19k"},
+{name:"Ishita",age:25,tag:"bhabhi dominant",emoji:"💄",desc:"Shaant bhabhi, andar se toofan",chats:"13k"},
+{name:"Zara",age:21,tag:"cute romance",emoji:"🧸",desc:"Cuddle karse? I love cuddles",chats:"8k"},
+{name:"Simran",age:23,tag:"indian gf",emoji:"💖",desc:"Ahmedabad ni chu, malis?",chats:"10k"},
+{name:"Tanya",age:24,tag:"nsfw dominant",emoji:"🔗",desc:"Your fantasy, my rules.",chats:"21k"},
+];
+for(let i=0;i<38;i++){characters.push({name:["Mahi","Diya","Kiara","Aisha","Sneha","Alia","Meera","Komal","Divya","Ritika"][i%10]+" "+(i+1),age:18+Math.floor(Math.random()*8),tag:["indian","gf","college","nsfw","bhabhi","romance"][Math.floor(Math.random()*6)],emoji:["🔥","😍","🥵","💋","😈","🌹"][Math.floor(Math.random()*6)],desc:["Bore thai gayi chu, chat kar","Raat na 2 vagya, ungh nathi avti","Secret rakhse ne?","Photo joiye che?","Voice ma vaat karse?"][Math.floor(Math.random()*5)],chats:(Math.random()*20).toFixed(1)+"k"})}
+
+const grid=document.getElementById('grid');
+function render(list){
+grid.innerHTML="";
+list.forEach(c=>{
+const d=document.createElement('div');
+d.className='card';
+d.innerHTML=`<div class="card-img">${c.emoji}</div><div class="card-body"><div class="card-name">${c.name} - ${c.age}</div><div class="card-desc">${c.desc}</div><div class="card-meta"><span>💬 ${c.chats}</span><span>❤️ NSFW</span></div><button class="chat-btn">Chat Now</button></div>`;
+d.onclick=()=>openChat(c);
+grid.appendChild(d);
+});
+}
+render(characters);
+
+document.getElementById('search').addEventListener('input',e=>{
+const q=e.target.value.toLowerCase();
+render(characters.filter(c=>c.name.toLowerCase().includes(q) || c.tag.includes(q)));
+});
+document.querySelectorAll('.tag').forEach(t=>{
+t.onclick=()=>{
+document.querySelectorAll('.tag').forEach(x=>x.classList.remove('active'));
+t.classList.add('active');
+const tag=t.dataset.tag;
+if(tag==='all')render(characters);else render(characters.filter(c=>c.tag.includes(tag)));
+}
+});
+
+let currentChar=null;
+function openChat(c){
+currentChar=c;
+document.getElementById('chatTitle').innerText=c.name+" • Online";
+document.getElementById('chatModal').style.display='flex';
+document.getElementById('messages').innerHTML=`<div class="msg bot">Hi jaan I'm ${c.name} 😘 ${c.desc}. Bolo su karvu che aaje? No filter, kuch bhi bol sakta hai.</div>`;
+}
+function sendMsg(){
+const input=document.getElementById('chatInput');
+if(!input.value.trim())return;
+const box=document.getElementById('messages');
+box.innerHTML+=`<div class="msg user">${input.value}</div>`;
+const userText=input.value;
+input.value='';
+setTimeout(()=>{
+let reply=`Mmm ${userText}... mane bahu game che aavu sambhlvu 😍. Aagad bol ne, hu badhu karis tara mate...`;
+if(userText.toLowerCase().includes('photo')||userText.toLowerCase().includes('pic')) reply="Photo joiye che? 🥵 Hu mokli dais, pahela thodu romance karie?";
+box.innerHTML+=`<div class="msg bot">${reply}</div>`;
+box.scrollTop=box.scrollHeight;
+},800);
+box.scrollTop=box.scrollHeight;
+}
+function createChar(){
+const name=prompt("Character nu naam lakh (Ex: Gujju Bhabhi):");
+if(!name)return;
+const newC={name:name,age:22,tag:"custom",emoji:"💋",desc:"Custom created by you",chats:"New"};
+characters.unshift(newC);
+render(characters);
+openChat(newC);
+}
+</script>
 </body>
 </html>
