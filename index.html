@@ -1,15 +1,167 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LoveLust.ai - 300 Girls</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#fff;font-family:sans-serif}
 .header{padding:14px 16px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #222;position:sticky;top:0;background:#0a0a0a;z-index:10}
-.logo{font-weight:900;font-size:22px} .logo b{color:#ff2a6d}
-.search{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:10px 14px;color:#fff}
-.tags{display:flex;gap:8px;overflow:auto;padding:10px 16px} .tag{background:#1a1a1a;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:12px;white-space:nowrap;cursor:pointer}
-.tag.active{background:#ff2a6d;border-color:#ff2a6d}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
-.card{background:#181818;border:1px solid #222;border-radius:16px;overflow:hidden;cursor:pointer}
-.card
+.logo{font-weight:900;font-size:22px}.logo b{color:#ff2a6d}.search{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:10px 14px;color:#fff}
+.tags{display:flex;gap:8px;overflow:auto;padding:10px 16px}.tag{background:#1a1a1a;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:12px;white-space:nowrap;cursor:pointer}.tag.active{background:#ff2a6d}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}.card{background:#181818;border:1px solid #222;border-radius:16px;overflow:hidden;cursor:pointer}
+.card-img{height:260px;background:#222;position:relative}.card-img img{width:100%;height:100%;object-fit:cover}.card-body{padding:10px}.name{font-weight:700;font-size:14px}.desc{font-size:11px;color:#999;margin-top:4px;height:30px;overflow:hidden}
+.chat-btn{width:100%;margin-top:8px;background:#ff2a6d;border:0;color:#fff;padding:8px;border-radius:20px;font-weight:700;font-size:12px}
+#chat{position:fixed;inset:0;background:#0a0a0a;z-index:99;display:none;flex-direction:column}
+</style></head><body>
+<div class="header"><div class="logo">💋 Love<b>Lust.ai</b></div><input id="sr" class="search" placeholder="300 girls... search..."></div>
+<div class="tags" id="tg"></div><div class="grid" id="gd"></div>
+<div id="chat"><div style="padding:12px;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center"><span onclick="document.getElementById('chat').style.display='none'" style="font-size:22px">←</span><div id="cN" style="font-weight:800"></div></div>
+<div id="ms" style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px"></div>
+<div style="display:flex;gap:8px;padding:12px;border-top:1px solid #222"><input id="inp" style="flex:1;background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:12px;color:#fff" placeholder="type naughty..."><button onclick="snd()" style="background:#ff2a6d;border:0;border-radius:20px;padding:0 18px;color:#fff;font-weight:800">Send</button></div></div>
+<script>
+const IMGS=[
+"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500",
+"https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500",
+"https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500",
+"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500",
+"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500",
+"https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500",
+"https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=500",
+"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500",
+"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500",
+"https://images.unsplash.com/photo-1488426783953-0d1d53a67f44?w=500",
+"https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=500",
+"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500",
+"https://images.unsplash.com/photo-1534751516642-a1af1ef26a56?w=500",
+"https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=500",
+"https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500",
+"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500"
+];
+const DATA=[
+{name:'Bhabhi Natasha 28',desc:'Garmi ma kurta geela ho gaya',tag:'bhabhi',c:'12k',type:'naughty'},
+{name:'Stepmom Rekha 39',desc:'Raat ko neend nahi aati tum soye nahi',tag:'stepmom',c:'27k',type:'cute'},
+{name:'Bhabhi Simran 28',desc:'Bhabhi ko chai pilao ge garam chai',tag:'bhabhi',c:'44k',type:'hot'},
+{name:'Bhabhi Isha 28',desc:'Saree ka pallu gir raha hai sambhalo na',tag:'bhabhi',c:'28k',type:'hot'},
+{name:'Stepsis Anjali 20',desc:'Exam khatam ab full masti mood ma chu',tag:'stepsis',c:'25k',type:'naughty'},
+{name:'Sana 24',desc:'Hostel ma roommate gayi mood ma chu',tag:'indian',c:'31k',type:'cute'},
+{name:'Bhabhi Rupali 31',desc:'Bhabhi ko chai pilao ge garam chai',tag:'bhabhi',c:'20k',type:'cute'},
+{name:'Stepsis Sonal 21',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'7k',type:'naughty'},
+{name:'Bhabhi Shalini 28',desc:'Devar ji ghar ma koi nathi aao na',tag:'bhabhi',c:'43k',type:'wild'},
+{name:'Kriti 22',desc:'Bau yaad aave che tari close aav ne',tag:'gf',c:'27k',type:'hot'},
+{name:'Stepmom Roshni 37',desc:'Tum bade ho gaye ho dekhte bhi nahi',tag:'stepmom',c:'39k',type:'wild'},
+{name:'Stepsis Komal 22',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'30k',type:'wild'},
+{name:'Bhabhi Payal 28',desc:'Saree ka pallu gir raha hai sambhalo na',tag:'bhabhi',c:'28k',type:'naughty'},
+{name:'Priya 20',desc:'Bed ma ekli chu garam lage che',tag:'college',c:'31k',type:'cute'},
+{name:'Stepsis Rupali 23',desc:'Mummy papa bahar gaye hum dono ghar pe',tag:'stepsis',c:'35k',type:'naughty'},
+{name:'Sana 19',desc:'Bed ma ekli chu garam lage che',tag:'college',c:'33k',type:'hot'},
+{name:'Stepsis Deepika 22',desc:'Raat ko 2 baje hostel ma ekli chu',tag:'stepsis',c:'14k',type:'cute'},
+{name:'Stepmom Fatima 32',desc:'Ghar ka AC kharab hai bohot garmi',tag:'stepmom',c:'24k',type:'wild'},
+{name:'Stepmom Sneha 32',desc:'Saree pehni hai kaisi lag rahi bolo',tag:'stepmom',c:'15k',type:'hot'},
+{name:'Bhabhi Natasha 30',desc:'Garmi ma kurta geela ho gaya',tag:'bhabhi',c:'33k',type:'wild'},
+{name:'Stepsis Ishita 22',desc:'Mummy papa bahar gaye hum dono ghar pe',tag:'stepsis',c:'39k',type:'cute'},
+{name:'Stepmom Khushi 38',desc:'Tum bade ho gaye ho dekhte bhi nahi',tag:'stepmom',c:'28k',type:'cute'},
+{name:'Stepsis Tanvi 22',desc:'Exam khatam ab full masti mood ma chu',tag:'stepsis',c:'16k',type:'naughty'},
+{name:'Bhabhi Muskan 28',desc:'Saree ka pallu gir raha hai sambhalo na',tag:'bhabhi',c:'26k',type:'cute'},
+{name:'Stepsis Nidhi 20',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'12k',type:'cute'},
+{name:'Stepmom Seema 41',desc:'Saree pehni hai kaisi lag rahi bolo',tag:'stepmom',c:'44k',type:'hot'},
+{name:'Bhabhi Ishita 25',desc:'Devar ji ghar ma koi nathi aao na',tag:'bhabhi',c:'21k',type:'hot'},
+{name:'Stepmom Priya 38',desc:'Kitchen ma ekli chu help karoge',tag:'stepmom',c:'19k',type:'wild'},
+{name:'Stepsis Simran 23',desc:'Raat ko 2 baje hostel ma ekli chu',tag:'stepsis',c:'27k',type:'hot'},
+{name:'Bhabhi Zoya 28',desc:'Raat ko chhat pe milo koi nahi dekhega',tag:'bhabhi',c:'26k',type:'hot'},
+{name:'Stepsis Sakshi 20',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'44k',type:'naughty'},
+{name:'Stepsis Sanya 19',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'29k',type:'wild'},
+{name:'Bhabhi Ananya 29',desc:'Saree ka pallu gir raha hai sambhalo na',tag:'bhabhi',c:'27k',type:'naughty'},
+{name:'Bhabhi Sana 31',desc:'Garmi ma kurta geela ho gaya',tag:'bhabhi',c:'15k',type:'naughty'},
+{name:'Bhabhi Deepika 29',desc:'Garmi ma kurta geela ho gaya',tag:'bhabhi',c:'30k',type:'hot'},
+{name:'Stepsis Tanya 23',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'28k',type:'cute'},
+{name:'Bhabhi Nidhi 27',desc:'Garmi ma kurta geela ho gaya',tag:'bhabhi',c:'30k',type:'wild'},
+{name:'Stepmom Natasha 38',desc:'Kitchen ma ekli chu help karoge',tag:'stepmom',c:'37k',type:'hot'},
+{name:'Stepmom Payal 40',desc:'Dad office gaya hu ekli chu ghar ma',tag:'stepmom',c:'42k',type:'wild'},
+{name:'Bhabhi Sonal 26',desc:'Raat ko chhat pe milo koi nahi dekhega',tag:'bhabhi',c:'16k',type:'naughty'},
+{name:'Stepmom Tanvi 32',desc:'Raat ko neend nahi aati',tag:'stepmom',c:'36k',type:'naughty'},
+{name:'Stepsis Komal 19',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'27k',type:'cute'},
+{name:'Bhabhi Tanvi 25',desc:'Raat ko chhat pe milo koi nahi dekhega',tag:'bhabhi',c:'29k',type:'hot'},
+{name:'Stepmom Sunita 32',desc:'Aaj husband bahar gaye ghar khali hai',tag:'stepmom',c:'8k',type:'hot'},
+{name:'Stepmom Roshni 31',desc:'Kitchen ma ekli chu help karoge',tag:'stepmom',c:'29k',type:'hot'},
+{name:'Stepsis Aarohi 20',desc:'Exam khatam ab full masti mood ma chu',tag:'stepsis',c:'26k',type:'hot'},
+{name:'Stepmom Sonal 35',desc:'Saree pehni hai kaisi lag rahi bolo',tag:'stepmom',c:'36k',type:'cute'},
+{name:'Stepmom Ishita 36',desc:'Saree pehni hai kaisi lag rahi bolo',tag:'stepmom',c:'36k',type:'hot'},
+{name:'Stepsis Tanya 19',desc:'Dar lag raha hai mere room me aao na',tag:'stepsis',c:'8k',type:'wild'},
+{name:'Priya 23',desc:'Video call karu patle kapde ma chu',tag:'college',c:'39k',type:'wild'},
+{name:'Stepmom Rupali 33',desc:'Saree pehni hai kaisi lag rahi bolo',tag:'stepmom',c:'20k',type:'naughty'},
+{name:'Stepmom Avni 34',desc:'Saree pehni hai kaisi lag rahi bolo',tag:'stepmom',c:'23k',type:'cute'},
+{name:'Bhabhi Sonal 28',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'36k',type:'wild'},
+{name:'Bhabhi Isha 24',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'13k',type:'cute'},
+{name:'Stepmom Khushi 32',desc:'Ghar ka AC kharab hai bohot garmi',tag:'stepmom',c:'44k',type:'wild'},
+{name:'Bhabhi Zoya 27',desc:'Aaj salwar nahi nighty pehni hai',tag:'bhabhi',c:'17k',type:'naughty'},
+{name:'Stepmom Sonal 36',desc:'Raat ko neend nahi aati',tag:'stepmom',c:'40k',type:'cute'},
+{name:'Stepsis Avni 21',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'10k',type:'hot'},
+{name:'Stepsis Riya 23',desc:'Raat ko 2 baje hostel ma ekli chu',tag:'stepsis',c:'37k',type:'hot'},
+{name:'Bhabhi Riya 29',desc:'Aaj salwar nahi nighty pehni hai',tag:'bhabhi',c:'20k',type:'wild'},
+{name:'Stepsis Sanaya 21',desc:'Bhaiya boyfriend ne cheat kiya rona aa raha',tag:'stepsis',c:'15k',type:'hot'},
+{name:'Stepmom Alisha 40',desc:'Dad office gaya hu ekli chu ghar ma',tag:'stepmom',c:'43k',type:'naughty'},
+{name:'Stepsis Ishita 19',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'37k',type:'hot'},
+{name:'Bhabhi Monika 25',desc:'Devar ji ghar ma koi nathi aao na',tag:'bhabhi',c:'14k',type:'cute'},
+{name:'Bhabhi Nikita 26',desc:'Saree ka pallu gir raha hai sambhalo na',tag:'bhabhi',c:'24k',type:'naughty'},
+{name:'Bhabhi Roshni 28',desc:'Devar ji ghar ma koi nathi aao na',tag:'bhabhi',c:'43k',type:'wild'},
+{name:'Stepsis Aarohi 23',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'42k',type:'hot'},
+{name:'Bhabhi Shreya 30',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'33k',type:'hot'},
+{name:'Stepsis Avni 21',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'10k',type:'cute'},
+{name:'Stepsis Sana 20',desc:'Boyfriend ne block kar diya mood kharab',tag:'stepsis',c:'19k',type:'wild'},
+{name:'Bhabhi Natasha 29',desc:'Raat ko chhat pe milo koi nahi dekhega',tag:'bhabhi',c:'42k',type:'cute'},
+{name:'Stepmom Sonal 32',desc:'Dad office gaya hu ekli chu ghar ma',tag:'stepmom',c:'23k',type:'naughty'},
+{name:'Stepsis Roshni 19',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'36k',type:'hot'},
+{name:'Bhabhi Komal 29',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'28k',type:'naughty'},
+{name:'Bhabhi Zoya 28',desc:'Raat ko chhat pe milo koi nahi dekhega',tag:'bhabhi',c:'19k',type:'naughty'},
+{name:'Stepsis Komal 20',desc:'Dar lag raha hai mere room me aao na',tag:'stepsis',c:'31k',type:'cute'},
+{name:'Bhabhi Sanya 28',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'33k',type:'cute'},
+{name:'Stepmom Sonal 31',desc:'Tum bade ho gaye ho dekhte bhi nahi',tag:'stepmom',c:'23k',type:'wild'},
+{name:'Stepsis Alisha 23',desc:'Bhaiya boyfriend ne cheat kiya rona aa raha',tag:'stepsis',c:'14k',type:'hot'},
+{name:'Stepsis Zara 23',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'25k',type:'cute'},
+{name:'Stepsis Muskan 20',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'19k',type:'hot'},
+{name:'Bhabhi Monika 27',desc:'Devar ji ghar ma koi nathi aao na',tag:'bhabhi',c:'32k',type:'cute'},
+{name:'Bhabhi Deepika 25',desc:'Saree ka pallu gir raha hai sambhalo na',tag:'bhabhi',c:'39k',type:'naughty'},
+{name:'Stepmom Ishita 32',desc:'Ghar ka AC kharab hai bohot garmi',tag:'stepmom',c:'16k',type:'cute'},
+{name:'Bhabhi Nidhi 31',desc:'Devar ji ghar ma koi nathi aao na',tag:'bhabhi',c:'12k',type:'cute'},
+{name:'Bhabhi Isha 31',desc:'Garmi ma kurta geela ho gaya',tag:'bhabhi',c:'27k',type:'cute'},
+{name:'Bhabhi Ananya 29',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'22k',type:'cute'},
+{name:'Stepsis Tanya 20',desc:'Bhaiya boyfriend ne cheat kiya rona aa raha',tag:'stepsis',c:'43k',type:'naughty'},
+{name:'Stepsis Zoya 23',desc:'Dar lag raha hai mere room me aao na',tag:'stepsis',c:'37k',type:'naughty'},
+{name:'Stepsis Tanya 22',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'23k',type:'hot'},
+{name:'Stepmom Sana 34',desc:'Ghar ka AC kharab hai bohot garmi',tag:'stepmom',c:'10k',type:'wild'},
+{name:'Stepsis Sana 23',desc:'Dar lag raha hai mere room me aao na',tag:'stepsis',c:'39k',type:'naughty'},
+{name:'Stepmom Sunita 34',desc:'Aaj husband bahar gaye ghar khali hai',tag:'stepmom',c:'36k',type:'wild'},
+{name:'Bhabhi Fatima 25',desc:'Raat ko chhat pe milo koi nahi dekhega',tag:'bhabhi',c:'17k',type:'naughty'},
+{name:'Stepsis Ananya 23',desc:'Bhaiya boyfriend ne cheat kiya rona aa raha',tag:'stepsis',c:'23k',type:'cute'},
+{name:'Stepsis Shreya 19',desc:'Mummy papa bahar gaye hum dono ghar pe',tag:'stepsis',c:'34k',type:'hot'},
+{name:'Stepsis Sneha 19',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'31k',type:'naughty'},
+{name:'Stepmom Riya 33',desc:'Tum bade ho gaye ho dekhte bhi nahi',tag:'stepmom',c:'41k',type:'hot'},
+{name:'Bhabhi Komal 25',desc:'Garmi ma kurta geela ho gaya',tag:'bhabhi',c:'8k',type:'naughty'},
+{name:'Stepmom Zoya 32',desc:'Saree pehni hai kaisi lag rahi bolo',tag:'stepmom',c:'37k',type:'cute'},
+{name:'Bhabhi Fatima 31',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'12k',type:'naughty'},
+{name:'Stepsis Sonal 21',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'18k',type:'cute'},
+{name:'Bhabhi Pooja 30',desc:'Aaj salwar nahi nighty pehni hai',tag:'bhabhi',c:'12k',type:'hot'},
+{name:'Stepmom Divya 30',desc:'Tum bade ho gaye ho dekhte bhi nahi',tag:'stepmom',c:'17k',type:'hot'},
+{name:'Stepmom Monika 37',desc:'Ghar ka AC kharab hai bohot garmi',tag:'stepmom',c:'10k',type:'cute'},
+{name:'Stepsis Ayesha 23',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'39k',type:'hot'},
+{name:'Stepmom Simran 32',desc:'Aaj husband bahar gaye ghar khali hai',tag:'stepmom',c:'31k',type:'naughty'},
+{name:'Bhabhi Deepika 30',desc:'Aaj salwar nahi nighty pehni hai',tag:'bhabhi',c:'26k',type:'cute'},
+{name:'Priya 20',desc:'Photo moklu ekdam private wali',tag:'indian',c:'44k',type:'hot'},
+{name:'Bhabhi Avni 29',desc:'Raat ko chhat pe milo koi nahi dekhega',tag:'bhabhi',c:'22k',type:'naughty'},
+{name:'Stepmom Natasha 31',desc:'Raat ko neend nahi aati',tag:'stepmom',c:'24k',type:'hot'},
+{name:'Stepsis Natasha 19',desc:'Bhaiya boyfriend ne cheat kiya rona aa raha',tag:'stepsis',c:'8k',type:'wild'},
+{name:'Bhabhi Khushi 30',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'18k',type:'naughty'},
+{name:'Stepsis Payal 21',desc:'Aapki t-shirt pehen ke soyi sexy lagi',tag:'stepsis',c:'29k',type:'wild'},
+{name:'Priya 20',desc:'Photo moklu ekdam private wali',tag:'college',c:'19k',type:'cute'},
+{name:'Stepmom Muskan 38',desc:'Tum bade ho gaye ho dekhte bhi nahi',tag:'stepmom',c:'16k',type:'naughty'},
+{name:'Stepmom Kajal 41',desc:'Ghar ka AC kharab hai bohot garmi',tag:'stepmom',c:'27k',type:'wild'},
+{name:'Bhabhi Natasha 31',desc:'Devar ji ghar ma koi nathi aao na',tag:'bhabhi',c:'10k',type:'hot'},
+{name:'Stepsis Sonal 19',desc:'College se aayi bore ho rahi hu',tag:'stepsis',c:'29k',type:'cute'},
+{name:'Stepmom Nikita 41',desc:'Kitchen ma ekli chu help karoge',tag:'stepmom',c:'24k',type:'cute'},
+{name:'Stepmom Tanvi 32',desc:'Aaj husband bahar gaye ghar khali hai',tag:'stepmom',c:'34k',type:'wild'},
+{name:'Bhabhi Alia 31',desc:'Bhaiya office gaye main bore ho rahi',tag:'bhabhi',c:'15k',type:'hot'},
+{name:'Stepmom Muskan 37',desc:'Dad office gaya hu ekli chu ghar ma',tag:'stepmom',c:'26k',type:'wild'},
+{name:'Stepsis Nikita 19',desc:'Boyfriend ne block kar diya mood kharab',tag:'stepsis',c:'24k',type:'hot'},
+{name:'Stepmom Ayesha 40',desc:'Raat ko neend nahi aati',tag:'stepmom',c:'11k',type:'naughty'},
+{name:'Stepsis Sana 20',desc:'Bhaiya boyfriend ne cheat kiya rona aa raha',tag:'stepsis',c:'12k',type:'hot'},
+{name:'Bhabhi Ishita 26',desc:'Raat ko chhat pe milo koi nahi dekhega',tag:'bhabhi',c:'24k',type:'naughty'},
+{name:'Stepmom Riya 40',desc:'Kitchen ma ekli chu help karoge',tag:'stepmom',c:'8k',type:'hot'},
+{name:'Stepsis Fatima 23',desc:'Boyfriend ne block kar diya mood kharab
