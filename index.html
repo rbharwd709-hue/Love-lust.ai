@@ -1,81 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LoveLust.ai</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#fff;font-family:sans-serif}
-.header{padding:14px 16px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #222;position:sticky;top:0;background:#0a0a0a;z-index:10}
-.logo{font-weight:900;font-size:22px} .logo b{color:#ff2a6d}
-.search{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:10px 14px;color:#fff}
-.tags{display:flex;gap:8px;overflow:auto;padding:10px 16px} .tag{background:#1a1a1a;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:12px;white-space:nowrap}
-.tag.active{background:#ff2a6d}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
-.card{background:#181818;border:1px solid #222;border-radius:16px;overflow:hidden}
-.card-img{height:220px;background:#222;position:relative} .card-img img{width:100%;height:100%;object-fit:cover}
-.card-body{padding:10px} .name{font-weight:700;font-size:14px} .desc{font-size:11px;color:#999;margin-top:4px}
-.chat-btn{width:100%;margin-top:8px;background:#ff2a6d;border:0;color:#fff;padding:8px;border-radius:20px;font-weight:700}
-#chat{position:fixed;inset:0;background:#0a0a0a;z-index:99;display:none;flex-direction:column}
-</style>
-</head>
-<body>
-<div class="header"><div class="logo">💋 Love<b>Lust.ai</b></div><input id="sr" class="search" placeholder="Find your naughty girl..."></div>
-<div class="tags" id="tg"></div>
-<div class="grid" id="gd"></div>
-<div id="chat">
-<div style="padding:12px;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center"><span onclick="document.getElementById('chat').style.display='none'" style="font-size:22px">←</span><div id="cN" style="font-weight:800"></div></div>
-<div id="ms" style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px"></div>
-<div style="display:flex;gap:8px;padding:12px;border-top:1px solid #222"><input id="inp" style="flex:1;background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:12px;color:#fff" placeholder="type..."><button onclick="snd()" style="background:#ff2a6d;border:0;border-radius:20px;padding:0 18px;color:#fff;font-weight:800">Send</button></div>
-</div>
-<script>
-const IMGS=["https://picsum.photos/seed/1/400/500","https://picsum.photos/seed/2/400/500","https://picsum.photos/seed/3/400/500","https://picsum.photos/seed/4/400/500","https://picsum.photos/seed/5/400/500","https://picsum.photos/seed/6/400/500","https://picsum.photos/seed/7/400/500","https://picsum.photos/seed/8/400/500"];
-const DATA=[
-{name:"Priya 22",desc:"Bed ma ekli chu, garam lage che",tag:"indian gf"},
-{name:"Stepmom Kavita 34",desc:"Dad office gaya, hu ekli chu ghar ma",tag:"stepmom"},
-{name:"Stepsis Ananya 22",desc:"Bhaiya boyfriend ne cheat kiya",tag:"stepsis"},
-{name:"Bhabhi Neha 26",desc:"Ghar ma koi nathi, saree ma chu",tag:"bhabhi"},
-{name:"Stepmom Shalini 36",desc:"Massage kar dega? body dukhe che",tag:"stepmom"},
-{name:"Stepsis Riya 21",desc:"Aapki t-shirt pehen ke soyi",tag:"stepsis"},
-{name:"Stepmom Pooja 32",desc:"Tum bade ho gaye ho, dekhte nahi",tag:"stepmom"},
-{name:"Stepsis Kiara 22",desc:"Mummy papa bahar, hum dono ghar pe",tag:"stepsis"},
-{name:"Mahi 22",desc:"Raat na 2 vagya, ungh nathi avti",tag:"indian"},
-{name:"Diya 23",desc:"Hostel ma roommate gayi, mood ma chu",tag:"college"},
-{name:"Stepmom Nisha 35",desc:"Raat ko neend nahi aati",tag:"stepmom"},
-{name:"Stepsis Zara 21",desc:"Dar lag raha hai, room me aao",tag:"stepsis"},
+const IMGS=[
+"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500&q=80",
+"https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80",
+"https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500&q=80",
+"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500&q=80",
+"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&q=80",
+"https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500&q=80",
+"https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&q=80",
+"https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=500&q=80",
+"https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=500&q=80",
+"https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&q=80",
+"https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=500&q=80",
+"https://images.unsplash.com/photo-1488426783953-0d1d53a67f44?w=500&q=80"
 ];
-const TAGS=["all","stepmom","stepsis","bhabhi","indian","gf"];
-const tg=document.getElementById('tg');
-TAGS.forEach((t,i)=>{
- let d=document.createElement('div'); d.className='tag'+(i==0?' active':''); d.innerText=t;
- d.onclick=()=>{
-  document.querySelectorAll('.tag').forEach(x=>x.classList.remove('active')); d.classList.add('active');
-  if(t=='all') show(DATA); else show(DATA.filter(x=>x.tag==t));
- };
- tg.appendChild(d);
-});
-function show(list){
- let g=document.getElementById('gd'); g.innerHTML='';
- list.forEach((c,i)=>{
-  let im=IMGS[i%IMGS.length];
-  g.innerHTML+=`<div class="card" onclick="openC(${i})"><div class="card-img"><img src="${im}"></div><div class="card-body"><div class="name">${c.name}</div><div class="desc">${c.desc}</div><button class="chat-btn">Chat Sexy</button></div></div>`;
- });
-}
-show(DATA);
-let cur=0;
-function openC(i){cur=i;document.getElementById('cN').innerText=DATA[i].name;document.getElementById('chat').style.display='flex';let m=document.getElementById('ms');m.innerHTML=`<div style="background:#1e1e1e;padding:12px;border-radius:16px;max-width:85%">heyyy ${DATA[i].name.split(' ')[0]}... tu avyo 😏<br><br>${DATA[i].desc}... sachu kau bau mood ma chu atlyre.<br><br>Su naam che taru jaan?</div>`;}
-function snd(){
- let inp=document.getElementById('inp'); if(!inp.value.trim())return;
- let ms=document.getElementById('ms'); ms.innerHTML+=`<div style="align-self:flex-end;background:#ff2a6d;padding:10px 14px;border-radius:16px;max-width:85%">${inp.value}</div>`;
- let txt=inp.value; inp.value='';
- setTimeout(()=>{
-  let replies=["Haye ${txt}... naam to mast che 😍<br><br>Hu bed ma chu atlyre, patla kapda ma... garmi lage che bau. Tu su kare che?","Mmm tu aam bole tyare control nathi rahtu 😏 thodu vadhare bol ne, detail ma","Haww ekdam besharam che tu 😘 mane gamse... [Private Pic - Telegram @YourLink ma full moklu chu]"];
-  ms.innerHTML+=`<div style="background:#1e1e1e;padding:12px;border-radius:16px;max-width:85%">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
-  ms.scrollTop=9999;
- },800);
-}
-document.getElementById('sr').addEventListener('input',e=>{
- let q=e.target.value.toLowerCase(); show(DATA.filter(x=>x.name.toLowerCase().includes(q)));
-});
-</script>
-</body>
-</html>
