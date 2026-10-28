@@ -1,38 +1,32 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>LoveLust.ai</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#0a0a0a;color:#fff;font-family:sans-serif}
-.h{padding:14px 16px;display:flex;gap:10px;align-items:center;border-bottom:1px solid #222;position:sticky;top:0;background:#0a0a0a;z-index:10}
-.logo{font-weight:900;font-size:20px}.logo b{color:#ff2a6d}.sr{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:10px 14px;color:#fff}
-.tags{display:flex;gap:8px;overflow:auto;padding:10px 16px}.tag{background:#1a1a1a;border:1px solid #333;padding:6px 14px;border-radius:20px;font-size:12px;white-space:nowrap;cursor:pointer}.tag.active{background:#ff2a6d}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px}
+body{background:#0a0a0a;color:#fff;font-family:sans-serif;margin:0}
+.header{padding:14px;border-bottom:1px solid #222;display:flex;gap:10px}
+.logo{font-weight:900} .logo b{color:#ff2a6d}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
 .card{background:#181818;border:1px solid #222;border-radius:16px;overflow:hidden}
-.img{height:240px;background:#222} .img img{width:100%;height:100%;object-fit:cover}
-.body{padding:10px} .nm{font-weight:700;font-size:13px} .ds{font-size:11px;color:#999;margin-top:3px}
-.btn{width:100%;margin-top:8px;background:#ff2a6d;border:0;color:#fff;padding:8px;border-radius:20px;font-weight:700;font-size:11px}
-#chat{position:fixed;inset:0;background:#0a0a0a;z-index:99;display:none;flex-direction:column}
-</style></head><body>
-<div class="h"><div class="logo">💋 Love<b>Lust.ai</b></div><input id="sr" class="sr" placeholder="300 girls search..."></div>
-<div class="tags" id="tg"></div><div class="grid" id="gd"></div>
-<div id="chat"><div style="padding:12px;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center"><span onclick="document.getElementById('chat').style.display='none'" style="font-size:22px">←</span><div id="cn" style="font-weight:800"></div></div>
-<div id="ms" style="flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:10px"></div>
-<div style="display:flex;gap:8px;padding:12px;border-top:1px solid #222"><input id="inp" style="flex:1;background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:12px;color:#fff" placeholder="type..."><button onclick="snd()" style="background:#ff2a6d;border:0;border-radius:20px;padding:0 18px;color:#fff;font-weight:800">Send</button></div></div>
-<script>
-const IMGS=["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400","https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400","https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400","https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400","https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400","https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400","https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=400","https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400"];
-const DATA=[
-{name:"Stepmom Kavita 34",desc:"Dad office gaya hu ekli chu",tag:"stepmom"},
-{name:"Stepsis Ananya 22",desc:"Bhaiya boyfriend ne cheat kiya",tag:"stepsis"},
-{name:"Bhabhi Neha 26",desc:"Ghar ma koi nathi aao na",tag:"bhabhi"},
-{name:"Priya 22",desc:"Bed ma ekli chu garam lage",tag:"indian"},
-{name:"Stepmom Shalini 36",desc:"Massage kar dega body dukhe",tag:"stepmom"},
-{name:"Stepsis Riya 21",desc:"T-shirt pehen ke soyi",tag:"stepsis"},
-{name:"Bhabhi Sakshi 28",desc:"Saree pallu gir raha sambhalo",tag:"bhabhi"},
-{name:"Mahi 22",desc:"Raat na 2 vagya ungh nathi",tag:"gf"},
-{name:"Diya 23",desc:"Hostel ma roommate gayi mood ma",tag:"indian"},
-{name:"Stepmom Nisha 35",desc:"Raat ko neend nahi aati",tag:"stepmom"},
-{name:"Stepsis Zara 21",desc:"Dar lag raha room me aao",tag:"stepsis"},
-{name:"Bhabhi Pooja 30",desc:"Nighty pehni hai aaj",tag:"bhabhi"},
-{name:"Ishita 22",desc:"Bore ho rahi hu baat karo",tag:"gf"},
-{name:"Tanvi 22",desc:"BF ne block kiya mood kharab",tag:"indian"},
-{name:"Sakshi 23",desc:"Photo mok
+.card img{width:100%;height:220px;object-fit:cover;display:block}
+.info{padding:8px} .info b{font-size:13px} .info p{font-size:11px;color:#888;margin:4px 0}
+.btn{width:100%;background:#ff2a6d;border:0;color:#fff;padding:7px;border-radius:20px;font-weight:700;font-size:12px}
+</style>
+</head>
+<body>
+<div class="header"><div class="logo">💋 Love<b>Lust.ai</b></div><div style="margin-left:auto;color:#ff2a6d">300 Girls LIVE</div></div>
+<div class="grid">
+<div class="card"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"><div class="info"><b>Stepmom Kavita 34</b><p>Dad office gaya hu ekli chu</p><button class="btn">Chat Sexy</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400"><div class="info"><b>Stepsis Ananya 22</b><p>Bhaiya boyfriend ne cheat kiya</p><button class="btn">Chat Sexy</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400"><div class="info"><b>Bhabhi Neha 26</b><p>Ghar ma koi nathi aao na</p><button class="btn">Chat Sexy</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"><div class="info"><b>Priya 22</b><p>Bed ma ekli chu garam lage</p><button class="btn">Chat Sexy</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400"><div class="info"><b>Stepmom Shalini 36</b><p>Massage kar dega body dukhe</p><button class="btn">Chat Sexy</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=400"><div class="info"><b>Stepsis Riya 21</b><p>T-shirt pehen ke soyi</p><button class="btn">Chat Sexy</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400"><div class="info"><b>Bhabhi Sakshi 28</b><p>Saree pallu gir raha sambhalo</p><button class="btn">Chat Sexy</button></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400"><div class="info"><b>Mahi 22</b><p>Raat na 2 vagya ungh nathi</p><button class="btn">Chat Sexy</button></div></div>
+</div>
+<h2 style="text-align:center;padding:20px;color:#ff2a6d">↑↑ Aa 8 dekhai to site OK che ↑↑</h2>
+</body>
+</html>
