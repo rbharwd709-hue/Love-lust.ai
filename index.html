@@ -1,32 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LoveLust.ai - Real Girls</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{background:#080808;color:#fff;font-family:Inter,sans-serif}
+.header{position:sticky;top:0;z-index:50;background:#080808ee;border-bottom:1px solid #1e1e1e;padding:12px 16px;display:flex;gap:12px;align-items:center}
+.logo{font-weight:900;font-size:22px}.logo b{color:#ff2a6d}
+.search{flex:1;background:#141414;border:1px solid #2a2a2a;border-radius:999px;padding:10px 14px;color:#fff}
+.tags{display:flex;gap:8px;overflow:auto;padding:12px 16px} .tag{background:#141414;border:1px solid #2a2a2a;padding:6px 14px;border-radius:999px;font-size:12px;white-space:nowrap;cursor:pointer} .tag.active{background:#ff2a6d;border-color:#ff2a6d}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#121212;border:1px solid #222;border-radius:18px;overflow:hidden;cursor:pointer}
+.card-img{height:240px;position:relative;overflow:hidden;background:#1a1a1a} .card-img img{width:100%;height:100%;object-fit:cover;filter:blur(6px) brightness(0.9)} .card:hover img{filter:blur(0px)}
+.badge{position:absolute;top:8px;left:8px;background:#ff2a6d;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800}
+.nsfw-blur{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#00000055}
+.unlock{background:#fff;color:#000;padding:5px 12px;border-radius:999px;font-size:11px;font-weight:800;margin-top:6px}
+.card-body{padding:10px} .name{font-weight:700;font-size:13px} .desc{font-size:11px;color:#aaa;margin-top:2px;height:32px;overflow:hidden} .meta{font-size:10px;color:#666;display:flex;justify-content:space-between;margin-top:6px}
+.chat-btn{width:100%;margin-top:8px;background:#ff2a6d;border:0;color:#fff;padding:8px;border-radius:999px;font-weight:700;font-size:12px}
+#chatModal{position:fixed;inset:0;background:#0a0a0a;z-index:100;display:none;flex-direction:column}
+.chat-h{padding:12px;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center}
+.msgs{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:85%;padding:12px 16px;border-radius:20px;font-size:14px;line-height:1.5} .bot{background:#1e1e1e;align-self:flex-start;border-bottom-left-radius:4px} .user{background:#ff2a6d;align-self:flex-end;border-bottom-right-radius:4px}
+.typing{font-size:11px;color:#ff5a8a;padding:0 14px;display:none}
+.input-bar{display:flex;gap:8px;padding:12px;border-top:1px solid #222} .input-bar input{flex:1;background:#141414;border:1px solid #333;border-radius:999px;padding:13px;color:#fff} .input-bar button{background:#ff2a6d;border:0;border-radius:999px;padding:0 18px;color:#fff;font-weight:800}
+</style>
+</head>
+<body>
+<div class="header"><div class="logo">💋 Love<b>Lust.ai</b></div><input id="s" class="search" placeholder="Find your naughty girl..."></div>
+<div class="tags" id="tags"></div><div class="grid" id="grid"></div>
+<div id="chatModal"><div class="chat-h"><span onclick="document.getElementById('chatModal').style.display='none'" style="cursor:pointer;font-size:20px">←</span><img id="cImg" style="width:36px;height:36px;border-radius:50%;object-fit:cover"><div><div id="cName" style="font-weight:800"></div><div style="font-size:11px;color:#ff5a8a">● online - touch ma chu 😏</div></div></div><div class="msgs" id="msgs"></div><div class="typing" id="typing">typing... 💋</div><div class="input-bar"><input id="inp" placeholder="Naughty lakh jaan..."><button onclick="send()">Send</button></div></div>
 <script>
 const IMG=["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500","https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500","https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500","https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500","https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=500","https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500","https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500","https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500"];
 const chars=[
-{n:"Priya 22",d:"Bed ma ekli chu, garam lage che",t:"gf indian",c:"12k",type:"naughty",role:"gf"},
-{n:"Stepmom Kavita 34",d:"Tara dad office gaya, hu ekli chu ghar ma, aavne?",t:"stepmom milf",c:"34k",type:"wild",role:"stepmom"},
-{n:"Stepsis Ananya 22",d:"Bhaiya, mera boyfriend ne cheat kiya, aap samjhaoge?",t:"stepsis college",c:"28k",type:"cute",role:"stepsis"},
-{n:"Bhabhi Neha 26",d:"Devar ji, ghar ma koi nathi, saree ma chu",t:"bhabhi indian",c:"23k",type:"desi",role:"bhabhi"},
-{n:"Stepmom Shalini 36",d:"Beta, massage kar dega? Pura body dukh raha hai",t:"stepmom milf",c:"41k",type:"wild",role:"stepmom"},
-{n:"Stepsis Riya 21",d:"Bhaiya aapki t-shirt pehen ke soyi, kaisi lag rahi hu?",t:"stepsis cute",c:"19k",type:"naughty",role:"stepsis"},
-{n:"Stepmom Pooja 32",d:"Tum bade ho gaye ho, aaj kal dekhte bhi nahi mujhe",t:"stepmom desi",c:"32k",type:"emotional",role:"stepmom"},
-{n:"Stepsis Kiara 22",d:"Mummy papa bahar gaye, ghar pe sirf hum dono",t:"stepsis",c:"25k",type:"wild",role:"stepsis"},
+{n:"Priya 22",d:"Bed ma ekli chu, garam lage che",t:"gf indian",c:"12k",type:"naughty"},
+{n:"Stepmom Kavita 34",d:"Tara dad office gaya, hu ekli chu ghar ma",t:"stepmom milf",c:"34k",type:"wild"},
+{n:"Stepsis Ananya 22",d:"Bhaiya, mera boyfriend ne cheat kiya",t:"stepsis college",c:"28k",type:"cute"},
+{n:"Bhabhi Neha 26",d:"Devar ji, ghar ma koi nathi",t:"bhabhi indian",c:"23k",type:"desi"},
+{n:"Stepmom Shalini 36",d:"Beta, massage kar dega? Body dukh rahi hai",t:"stepmom milf",c:"41k",type:"wild"},
+{n:"Stepsis Riya 21",d:"Bhaiya aapki t-shirt pehen ke soyi",t:"stepsis cute",c:"19k",type:"naughty"},
+{n:"Stepmom Pooja 32",d:"Tum bade ho gaye ho, dekhte bhi nahi",t:"stepmom desi",c:"32k",type:"emotional"},
+{n:"Stepsis Kiara 22",d:"Mummy papa bahar gaye, sirf hum dono",t:"stepsis",c:"25k",type:"wild"},
 ];
-for(let i=0;i<32;i++){
-  const isStepMom = i%4==0;
-  const isStepSis = i%4==1;
-  let name, desc, tag, role;
-  if(isStepMom){
-    name=["Stepmom Nisha 35","Stepmom Sunita 33","Stepmom Rekha 38","Stepmom Alia 30"][i%4];
-    desc=["Raat ko neend nahi aati, baat karega?","Tumhare dad ke baad mai akeli feel karti hu","Aaj saree me kaisi lag rahi hu batao na","Ghar ka AC kharab hai, bohot garmi lag rahi hai"][i%4];
-    tag="stepmom"; role="stepmom";
-  } else if(isStepSis){
-    name=["Stepsis Diya 22","Stepsis Zara 21","Stepsis Mahi 23","Stepsis Tanya 22"][i%4];
-    desc=["Bhaiya mere room me aao na, dar lag raha hai","Aapki GF se jyada hot hu kya mai?","Mummy ne naya nighty dilaya, dekhu?","Hostel se wapas aayi, koi dost nahi yaha"][i%4];
-    tag="stepsis"; role="stepsis";
-  } else {
-    name=["Mahi 22","Diya 23","Kiara 22"][i%3];
-    desc=["Garam thai rahyu che","Lipstick lagavi tara mate","Raat na 2 vagya ungh nathi"][i%3];
-    tag="indian"; role="gf";
-  }
-  chars.push({n:name,d:desc,t:tag,c:(Math.random()*30).toFixed(1)+"k",type:["naughty","wild","cute"][i%3],role:role});
-}
-</script>
+for(let i=0;i<32;i++){chars.push({n:["Stepmom Nisha 35","Stepsis Diya 22","Mahi 22","Stepmom Sunita 33","Stepsis Zara 21","Diya 23"][i%6],d:["Raat ko neend nahi aati, baat karega?","Bhaiya mere room me aao na, dar lag raha","Bau garam thai rahyu che yaar","Ghar ka AC kharab hai, bohot garmi"][i%4],t:["stepmom","stepsis","indian","gf"][i%4],c:(Math.random()*30).toFixed(1)+"k",type:["naughty","wild","cute"][i%3]})}
+const tags=["all","stepmom","stepsis","indian","gf","bhabhi","naughty","wild"];
+const tagBox=document.getElementById('tags');tags.forEach((x,i)=>{const d=document.createElement('div');d.className='tag'+(i==0?' active':'');d.innerText=x;d.onclick=()=>{document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));d.classList.add('active');if(x=='all')render(chars);else render(chars.filter(c=>c.t.includes(x)))};tagBox.appendChild(d)});
+function render(list){const g=document.getElementById('grid');g.innerHTML="";list.forEach((c)=>{const idx=chars.indexOf(c);const im=IMG[idx%IMG.length];g.innerHTML+=`<div class="card" onclick="openC(${idx},'${im}')"><div class="card-img"><img src="${im}"><div class="badge">18+ LIVE</div><div class="nsfw-blur"><div style="font-size:20px">🔥</div><div class="unlock">Tap to Chat</div></div></div><div class="card-body"><div class="name">${c.n}</div><div class="desc">${c.d}</div><div class="meta"><span>💬 ${c.c}</span><span>🔥 ${c.type}</span></div><button class="chat-btn">Chat Sexy</button></div></div>`});}
+render(chars);
+document.getElementById('s').addEventListener('input',e=>{const q=e.target.value.toLowerCase();render(chars.filter(c=>c.n.toLowerCase().includes(q)))});
+let cur=null,msgCount=0,userName="";
+function openC(i,im){cur=chars[i];document.getElementById('cName').innerText=cur.n;document.getElementById('cImg').src=im;document.getElementById('chatModal').style.display='flex';const m=document.getElementById('msgs');m.innerHTML="";msg
