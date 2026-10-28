@@ -1,32 +1,39 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>LoveLust.ai</title>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LoveLust.ai - 300 Girls</title>
 <style>
 body{background:#0a0a0a;color:#fff;font-family:sans-serif;margin:0}
-.header{padding:14px;border-bottom:1px solid #222;display:flex;gap:10px}
-.logo{font-weight:900} .logo b{color:#ff2a6d}
+.header{padding:14px;border-bottom:1px solid #222;display:flex;gap:10px;position:sticky;top:0;background:#0a0a0a;z-index:10}
+.logo{font-weight:900;font-size:20px} .logo b{color:#ff2a6d}
+.search{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:20px;padding:10px 14px;color:#fff}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px}
 .card{background:#181818;border:1px solid #222;border-radius:16px;overflow:hidden}
-.card img{width:100%;height:220px;object-fit:cover;display:block}
-.info{padding:8px} .info b{font-size:13px} .info p{font-size:11px;color:#888;margin:4px 0}
-.btn{width:100%;background:#ff2a6d;border:0;color:#fff;padding:7px;border-radius:20px;font-weight:700;font-size:12px}
-</style>
-</head>
-<body>
-<div class="header"><div class="logo">💋 Love<b>Lust.ai</b></div><div style="margin-left:auto;color:#ff2a6d">300 Girls LIVE</div></div>
-<div class="grid">
-<div class="card"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400"><div class="info"><b>Stepmom Kavita 34</b><p>Dad office gaya hu ekli chu</p><button class="btn">Chat Sexy</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400"><div class="info"><b>Stepsis Ananya 22</b><p>Bhaiya boyfriend ne cheat kiya</p><button class="btn">Chat Sexy</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400"><div class="info"><b>Bhabhi Neha 26</b><p>Ghar ma koi nathi aao na</p><button class="btn">Chat Sexy</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400"><div class="info"><b>Priya 22</b><p>Bed ma ekli chu garam lage</p><button class="btn">Chat Sexy</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400"><div class="info"><b>Stepmom Shalini 36</b><p>Massage kar dega body dukhe</p><button class="btn">Chat Sexy</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=400"><div class="info"><b>Stepsis Riya 21</b><p>T-shirt pehen ke soyi</p><button class="btn">Chat Sexy</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400"><div class="info"><b>Bhabhi Sakshi 28</b><p>Saree pallu gir raha sambhalo</p><button class="btn">Chat Sexy</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400"><div class="info"><b>Mahi 22</b><p>Raat na 2 vagya ungh nathi</p><button class="btn">Chat Sexy</button></div></div>
-</div>
-<h2 style="text-align:center;padding:20px;color:#ff2a6d">↑↑ Aa 8 dekhai to site OK che ↑↑</h2>
-</body>
-</html>
+.card img{width:100%;height:240px;object-fit:cover;display:block}
+.info{padding:8px} .info b{font-size:13px} .info p{font-size:11px;color:#888;margin:4px 0;height:16px;overflow:hidden}
+.btn{width:100%;background:#ff2a6d;border:0;color:#fff;padding:7px;border-radius:20px;font-weight:700;font-size:11px}
+</style></head><body>
+<div class="header"><div class="logo">💋 Love<b>Lust.ai</b></div><input class="search" id="sr" placeholder="Search 300 girls..."><div style="color:#ff2a6d;font-weight:800">300</div></div>
+<div class="grid" id="gd"></div>
+<script>
+var IMGS=["https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400","https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400","https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400","https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400","https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400","https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400","https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=400","https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400","https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400","https://images.unsplash.com/photo-1488426783953-0d1d53a67f44?w=400","https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400","https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400"];
+var NAMES=["Stepmom Kavita","Stepsis Ananya","Bhabhi Neha","Priya","Stepmom Shalini","Stepsis Riya","Bhabhi Sakshi","Mahi","Diya","Kiara","Zara","Ishita","Tanvi","Sakshi","Payal","Sneha","Komal","Aarohi","Avni","Meera","Simran","Kriti","Shruti","Divya","Kajal","Natasha","Roshni","Alisha","Sanaya","Nikita","Ayesha","Sana","Zoya"];
+var ROLES=["Stepmom","Stepsis","Bhabhi","","",""];
+var DESCS=["Dad office gaya hu ekli chu","Bhaiya boyfriend ne cheat kiya","Ghar ma koi nathi aao na","Bed ma ekli chu garam lage","Massage kar dega body dukhe","T-shirt pehen ke soyi","Saree pallu gir raha sambhalo","Raat na 2 vagya ungh nathi","Bore ho rahi hu baat karo","BF ne block kiya mood kharab","Photo moklu private wali","Raat ko neend nahi aati","Kitchen ma ekli chu help karoge","Exam khatam masti mood ma chu"];
+var gd=document.getElementById("gd");
+for(var i=0;i<300;i++){
+  var nm=NAMES[i%NAMES.length];
+  var role=ROLES[i%ROLES.length];
+  var age= role=="Stepmom" ? 30+Math.floor(Math.random()*10) : 19+Math.floor(Math.random()*8);
+  var full = role ? role+" "+nm+" "+age : nm+" "+age;
+  var desc=DESCS[i%DESCS.length];
+  var im=IMGS[i%IMGS.length];
+  var d=document.createElement("div"); d.className="card";
+  d.innerHTML='<img src="'+im+'"><div class="info"><b>'+full+'</b><p>'+desc+'</p><button class="btn">Chat Sexy</button></div>';
+  gd.appendChild(d);
+}
+document.getElementById("sr").addEventListener("input",function(e){
+  var q=e.target.value.toLowerCase();
+  var cards=document.querySelectorAll(".card");
+  for(var k=0;k<cards.length;k++){var txt=cards[k].innerText.toLowerCase(); cards[k].style.display= txt.indexOf(q)>-1 ? "block":"none";}
+});
+</script></body></html>
