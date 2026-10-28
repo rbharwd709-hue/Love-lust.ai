@@ -1,147 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LoveLust.ai - Unlimited AI Characters</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LoveLust.ai - Unlimited NSFW AI</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0a0a;color:#fff;font-family:Inter,system-ui,sans-serif}
-.header{position:sticky;top:0;z-index:50;background:#0a0a0aee;backdrop-filter:blur(10px);border-bottom:1px solid #222;padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:22px;font-weight:800;display:flex;gap:8px;align-items:center}
-.logo span{color:#ff2a6d}
-.search{flex:1;max-width:500px;margin:0 16px;background:#1a1a1a;border:1px solid #333;border-radius:999px;padding:10px 16px;color:#fff;width:100%}
-.tags{display:flex;gap:8px;overflow:auto;padding:12px 16px;scrollbar-width:none}
-.tag{white-space:nowrap;background:#1a1a1a;border:1px solid #333;padding:6px 14px;border-radius:999px;font-size:13px;cursor:pointer}
-.tag.active{background:#ff2a6d;border-color:#ff2a6d}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#080808;color:#fff;font-family:Inter,sans-serif}
+.header{position:sticky;top:0;z-index:50;background:#080808ee;backdrop-filter:blur(10px);border-bottom:1px solid #1e1e1e;padding:12px 16px;display:flex;gap:12px;align-items:center}
+.logo{font-weight:900;font-size:22px} .logo b{color:#ff2a6d}
+.search{flex:1;background:#141414;border:1px solid #2a2a2a;border-radius:999px;padding:10px 14px;color:#fff}
+.tags{display:flex;gap:8px;overflow:auto;padding:12px 16px} .tag{background:#141414;border:1px solid #2a2a2a;padding:6px 14px;border-radius:999px;font-size:12px;white-space:nowrap;cursor:pointer} .tag.active{background:#ff2a6d;border-color:#ff2a6d}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:10px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:#161616;border:1px solid #222;border-radius:16px;overflow:hidden;cursor:pointer;transition:.2s}
-.card:hover{border-color:#ff2a6d}
-.card-img{height:180px;background:linear-gradient(135deg,#2a0a1a,#1a1a2a);display:flex;align-items:center;justify-content:center;font-size:50px}
-.card-body{padding:10px}
-.card-name{font-weight:700;font-size:14px}
-.card-desc{font-size:12px;color:#888;margin:4px 0;height:32px;overflow:hidden}
-.card-meta{display:flex;justify-content:space-between;font-size:11px;color:#555;margin-top:6px}
-.chat-btn{width:100%;margin-top:8px;background:#ff2a6d;color:#fff;border:0;padding:8px;border-radius:999px;font-weight:600}
-.create-btn{position:fixed;bottom:20px;right:20px;background:#ff2a6d;width:56px;height:56px;border-radius:50%;border:0;font-size:28px;color:#fff;box-shadow:0 8px 30px #ff2a6d55}
-/* Chat Modal */
-#chatModal{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:100}
-.chat-header{padding:12px;border-bottom:1px solid #222;display:flex;align-items:center;gap:10px}
-.chat-messages{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
-.msg{max-width:80%;padding:10px 14px;border-radius:18px;font-size:14px;line-height:1.4}
-.msg.bot{background:#1e1e1e;align-self:flex-start;border-bottom-left-radius:4px}
-.msg.user{background:#ff2a6d;align-self:flex-end;border-bottom-right-radius:4px}
-.chat-input{display:flex;gap:8px;padding:12px;border-top:1px solid #222}
-.chat-input input{flex:1;background:#1a1a1a;border:1px solid #333;border-radius:999px;padding:12px 16px;color:#fff}
-.chat-input button{background:#ff2a6d;border:0;border-radius:999px;padding:0 18px;color:#fff;font-weight:700}
+.card{background:#121212;border:1px solid #222;border-radius:18px;overflow:hidden;position:relative}
+.card-img{height:220px;position:relative;overflow:hidden;background:#1a1a1a}
+.card-img img{width:100%;height:100%;object-fit:cover;filter:blur(6px) brightness(0.9);transition:.3s}
+.card:hover img{filter:blur(0px)}
+.badge{position:absolute;top:8px;left:8px;background:#ff2a6d;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800}
+.nsfw-blur{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:#00000066}
+.unlock{margin-top:6px;background:#fff;color:#000;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700}
+.card-body{padding:10px} .name{font-weight:700;font-size:13px} .desc{font-size:11px;color:#888;margin-top:2px;height:28px;overflow:hidden}
+.meta{font-size:10px;color:#555;display:flex;justify-content:space-between;margin-top:6px}
+.chat-btn{width:100%;margin-top:8px;background:#ff2a6d;border:0;color:#fff;padding:8px;border-radius:999px;font-weight:700;font-size:12px}
+#chatModal{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column}
+.chat-h{padding:12px;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center}
+.msgs{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.msg{max-width:80%;padding:10px 14px;border-radius:18px;font-size:13px} .bot{background:#1a1a1a;align-self:flex-start} .user{background:#ff2a6d;align-self:flex-end}
+.input-bar{display:flex;gap:8px;padding:12px;border-top:1px solid #222} .input-bar input{flex:1;background:#141414;border:1px solid #333;border-radius:999px;padding:12px;color:#fff} .input-bar button{background:#ff2a6d;border:0;border-radius:999px;padding:0 16px;color:#fff;font-weight:800}
+.create{position:fixed;bottom:18px;right:18px;background:#ff2a6d;width:56px;height:56px;border-radius:50%;border:0;color:#fff;font-size:28px}
 </style>
 </head>
 <body>
-<div class="header">
-<div class="logo">💋 Love<span>Lust.ai</span></div>
-<input id="search" class="search" placeholder="Search 10,000+ characters... Priya, Bhabhi, GF...">
-<button style="background:#1a1a1a;border:1px solid #333;padding:8px 14px;border-radius:999px;color:#fff">Login</button>
-</div>
-<div class="tags" id="tags">
-<div class="tag active" data-tag="all">All</div>
-<div class="tag" data-tag="indian">🇮🇳 Indian</div>
-<div class="tag" data-tag="gf">GF</div>
-<div class="tag" data-tag="bhabhi">Bhabhi</div>
-<div class="tag" data-tag="college">College</div>
-<div class="tag" data-tag="nsfw">NSFW</div>
-<div class="tag" data-tag="romance">Romance</div>
-<div class="tag" data-tag="dominant">Dominant</div>
-<div class="tag" data-tag="cute">Cute</div>
-</div>
+<div class="header"><div class="logo">💋 Love<b>Lust.ai</b></div><input id="s" class="search" placeholder="Search 10k+ HOT AIs..."><div style="font-size:12px">18+</div></div>
+<div class="tags" id="tags"></div>
 <div class="grid" id="grid"></div>
-<button class="create-btn" onclick="createChar()">+</button>
+<button class="create" onclick="addChar()">+</button>
 
-<div id="chatModal">
-<div class="chat-header">
-<span onclick="document.getElementById('chatModal').style.display='none'" style="font-size:20px;cursor:pointer">←</span>
-<div id="chatTitle" style="font-weight:700">Priya</div>
-</div>
-<div class="chat-messages" id="messages"></div>
-<div class="chat-input">
-<input id="chatInput" placeholder="Type anything... no filter ❤️">
-<button onclick="sendMsg()">Send</button>
-</div>
-</div>
+<div id="chatModal"><div class="chat-h"><span onclick="this.parentElement.parentElement.style.display='none'" style="cursor:pointer">←</span><div><div id="cName" style="font-weight:800"></div><div style="font-size:10px;color:#0f0">● Online - Typing nudes...</div></div></div><div class="msgs" id="msgs"></div><div class="input-bar"><input id="inp" placeholder="Bol jaan, su karvu che? No filter..."><button onclick="send()">Send</button></div></div>
 
 <script>
-const characters = [
-{name:"Priya",age:22,tag:"indian gf",emoji:"🔥",desc:"Hi jaan, chat karse? Tane yaad karu chu raat bhar",chats:"12.4k"},
-{name:"Ananya",age:21,tag:"college cute",emoji:"😍",desc:"Tane yaad kare che, college bunk kari ne malvu?",chats:"9.1k"},
-{name:"Bhabhi Neha",age:26,tag:"bhabhi indian",emoji:"🥵",desc:"Devar ji, akela chu ghar pe, baat karoge?",chats:"22.3k"},
-{name:"Sakshi",age:19,tag:"cute college",emoji:"💋",desc:"First time ayu chu, sikhavse mane?",chats:"7.2k"},
-{name:"Riya Dominant",age:24,tag:"dominant nsfw",emoji:"👠",desc:"I will control you tonight, obey me.",chats:"18k"},
-{name:"Pooja",age:23,tag:"indian romance",emoji:"🌹",desc:"Pyar se baat kar, dil se",chats:"11k"},
-{name:"Nisha",age:20,tag:"indian gf",emoji:"✨",desc:"Teri hi hu jaan, jo bolse e karis",chats:"15k"},
-{name:"Kavya",age:22,tag:"college nsfw",emoji:"😈",desc:"Naughty mood ma chu, rokshe kon?",chats:"19k"},
-{name:"Ishita",age:25,tag:"bhabhi dominant",emoji:"💄",desc:"Shaant bhabhi, andar se toofan",chats:"13k"},
-{name:"Zara",age:21,tag:"cute romance",emoji:"🧸",desc:"Cuddle karse? I love cuddles",chats:"8k"},
-{name:"Simran",age:23,tag:"indian gf",emoji:"💖",desc:"Ahmedabad ni chu, malis?",chats:"10k"},
-{name:"Tanya",age:24,tag:"nsfw dominant",emoji:"🔗",desc:"Your fantasy, my rules.",chats:"21k"},
+const IMG = [
+"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&q=80",
+"https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80",
+"https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80",
+"https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&q=80",
+"https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=400&q=80",
+"https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&q=80",
 ];
-for(let i=0;i<38;i++){characters.push({name:["Mahi","Diya","Kiara","Aisha","Sneha","Alia","Meera","Komal","Divya","Ritika"][i%10]+" "+(i+1),age:18+Math.floor(Math.random()*8),tag:["indian","gf","college","nsfw","bhabhi","romance"][Math.floor(Math.random()*6)],emoji:["🔥","😍","🥵","💋","😈","🌹"][Math.floor(Math.random()*6)],desc:["Bore thai gayi chu, chat kar","Raat na 2 vagya, ungh nathi avti","Secret rakhse ne?","Photo joiye che?","Voice ma vaat karse?"][Math.floor(Math.random()*5)],chats:(Math.random()*20).toFixed(1)+"k"})}
+const chars=[
+{n:"Priya 22",d:"Ahmedabad ni, raat ma ekli chu jaan 💦",t:"indian gf nsfw",c:"12k"},
+{n:"Bhabhi Neha 26",d:"Devar ji ghar pe koi nahi, photo bheju?",t:"bhabhi indian nsfw",c:"23k"},
+{n:"Ananya 21",d:"College bunk, let's do naughty video chat?",t:"college cute nsfw",c:"9k"},
+{n:"Riya Dominant",d:"I will make you beg, slave.",t:"dominant nsfw",c:"18k"},
+{n:"Sakshi 19",d:"First time, teach me naughty things",t:"cute indian",c:"7k"},
+{n:"Kavya 22",d:"Full horny mood, no limits",t:"college nsfw",c:"19k"},
+];
+for(let i=0;i<44;i++){chars.push({n:["Mahi","Diya","Kiara","Alia","Zara","Nisha","Pooja","Tanya","Ishita","Simran"][i%10]+" "+(19+Math.floor(Math.random()*7)),d:["Send me your pic, I'll send mine 🔥","18+ chat only, come fast","Gujju chori, full open minded","Nude video call karse?","Secret rakhis to badhu karis"][i%5],t:["indian","gf","bhabhi","college","nsfw","dominant"][i%6],c:(Math.random()*25).toFixed(1)+"k"})}
 
-const grid=document.getElementById('grid');
+const tags=["all","🇮🇳 indian","gf","bhabhi","college","nsfw","dominant","cute","romance"];
+const tagBox=document.getElementById('tags');
+tags.forEach((x,i)=>{const d=document.createElement('div');d.className='tag'+(i==0?' active':'');d.innerText=x;d.onclick=()=>{document.querySelectorAll('.tag').forEach(t=>t.classList.remove('active'));d.classList.add('active');filter(x)};tagBox.appendChild(d)});
+
 function render(list){
-grid.innerHTML="";
-list.forEach(c=>{
-const d=document.createElement('div');
-d.className='card';
-d.innerHTML=`<div class="card-img">${c.emoji}</div><div class="card-body"><div class="card-name">${c.name} - ${c.age}</div><div class="card-desc">${c.desc}</div><div class="card-meta"><span>💬 ${c.chats}</span><span>❤️ NSFW</span></div><button class="chat-btn">Chat Now</button></div>`;
-d.onclick=()=>openChat(c);
-grid.appendChild(d);
+const g=document.getElementById('grid');g.innerHTML="";
+list.forEach((c,idx)=>{
+const im=IMG[idx%IMG.length];
+g.innerHTML+=`<div class="card" onclick="openC(${chars.indexOf(c)})"><div class="card-img"><img src="${im}"><div class="badge">18+ HOT</div><div class="nsfw-blur"><span style="font-size:22px">🔞</span><div class="unlock">Tap to Unlock Nudes</div></div></div><div class="card-body"><div class="name">${c.n}</div><div class="desc">${c.d}</div><div class="meta"><span>💬 ${c.c}</span><span>🔥 ${c.t}</span></div><button class="chat-btn">Chat & See Pics</button></div></div>`;
 });
 }
-render(characters);
+render(chars);
+function filter(t){if(t=='all')render(chars);else render(chars.filter(c=>c.t.includes(t.replace('🇮🇳 ',''))))}
+document.getElementById('s').addEventListener('input',e=>{const q=e.target.value.toLowerCase();render(chars.filter(c=>c.n.toLowerCase().includes(q)||c.t.includes(q)))});
 
-document.getElementById('search').addEventListener('input',e=>{
-const q=e.target.value.toLowerCase();
-render(characters.filter(c=>c.name.toLowerCase().includes(q) || c.tag.includes(q)));
-});
-document.querySelectorAll('.tag').forEach(t=>{
-t.onclick=()=>{
-document.querySelectorAll('.tag').forEach(x=>x.classList.remove('active'));
-t.classList.add('active');
-const tag=t.dataset.tag;
-if(tag==='all')render(characters);else render(characters.filter(c=>c.tag.includes(tag)));
-}
-});
+let cur=null;
+function openC(i){cur=chars[i];document.getElementById('cName').innerText=cur.n;document.getElementById('chatModal').style.display='flex';document.getElementById('msgs').innerHTML=`<div class="msg bot">Hey jaan I'm ${cur.n} 😘 ${cur.d}<br><br><i style='color:#ff2a6d'>[Blurred nude photo sent - Tap to Unlock on Telegram @YourLink]</i><br><br>Bolo aagad su karvu che? No filter, kuch bhi bol.</div>`;}
 
-let currentChar=null;
-function openChat(c){
-currentChar=c;
-document.getElementById('chatTitle').innerText=c.name+" • Online";
-document.getElementById('chatModal').style.display='flex';
-document.getElementById('messages').innerHTML=`<div class="msg bot">Hi jaan I'm ${c.name} 😘 ${c.desc}. Bolo su karvu che aaje? No filter, kuch bhi bol sakta hai.</div>`;
-}
-function sendMsg(){
-const input=document.getElementById('chatInput');
-if(!input.value.trim())return;
-const box=document.getElementById('messages');
-box.innerHTML+=`<div class="msg user">${input.value}</div>`;
-const userText=input.value;
-input.value='';
-setTimeout(()=>{
-let reply=`Mmm ${userText}... mane bahu game che aavu sambhlvu 😍. Aagad bol ne, hu badhu karis tara mate...`;
-if(userText.toLowerCase().includes('photo')||userText.toLowerCase().includes('pic')) reply="Photo joiye che? 🥵 Hu mokli dais, pahela thodu romance karie?";
-box.innerHTML+=`<div class="msg bot">${reply}</div>`;
-box.scrollTop=box.scrollHeight;
-},800);
-box.scrollTop=box.scrollHeight;
-}
-function createChar(){
-const name=prompt("Character nu naam lakh (Ex: Gujju Bhabhi):");
-if(!name)return;
-const newC={name:name,age:22,tag:"custom",emoji:"💋",desc:"Custom created by you",chats:"New"};
-characters.unshift(newC);
-render(characters);
-openChat(newC);
-}
+function send(){const inp=document.getElementById('inp');if(!inp.value.trim())return;const m=document.getElementById('msgs');m.innerHTML+=`<div class="msg user">${inp.value}</div>`;const txt=inp.value;inp.value='';setTimeout(()=>{let r=`Mmm... ${txt} 😍 hu taraj chu... bol na thodu vadhare naughty bol... <br><br> <span style='font-size:11px;color:#ff2a6d'>[AI Nude Pic: telegram pe full unlock karo @YourLink]</span>`;if(txt.toLowerCase().includes('pic')||txt.toLowerCase().includes('nude')||txt.toLowerCase().includes('photo')) r=`Tane mari nude joiye che? 🥵 Ek kaam kar, Telegram par aa, hu tya badhi original bina blur wali moklu chu. Yaha Vercel allow nahi karta.<br><br><a href='#' style='color:#ff2a6d'>👉 Join Private Nudes Channel</a>`;m.innerHTML+=`<div class="msg bot">${r}</div>`;m.scrollTop=m.scrollHeight;},700);m.scrollTop=9999;}
+function addChar(){const n=prompt('Nava character nu naam + pic link? (Ex: Gujju Bhabhi)');if(!n)return;chars.unshift({n:n,d:'Custom by you - upload nude on Telegram',t:'custom nsfw',c:'New'});render(chars);}
 </script>
 </body>
 </html>
